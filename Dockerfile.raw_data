@@ -1,0 +1,7 @@
+FROM python:3.9
+WORKDIR /app
+COPY raw_data.py .
+COPY data ./data
+RUN python -m pip install --upgrade pip
+RUN pip install confluent_kafka pandas
+CMD ["python", "raw_data.py"]

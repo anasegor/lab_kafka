@@ -1,0 +1,7 @@
+FROM python:3.9
+WORKDIR /app
+COPY preprocessing_data.py .
+COPY utilities.py .
+RUN python -m pip install --upgrade pip
+RUN pip install confluent_kafka pandas scikit-learn
+CMD ["python", "preprocessing_data.py"]
