@@ -121,6 +121,7 @@ def map_city(city):
 
 
 def preprocess_data(data, map_city):
+
     data["ADDRESS"] = data["ADDRESS"].str.split(",").str[-1].str.strip()
     data["city_tier"] = data["ADDRESS"].apply(map_city)
     data.drop(["POSTED_BY", "BHK_OR_RK", "ADDRESS"], axis=1, inplace=True)

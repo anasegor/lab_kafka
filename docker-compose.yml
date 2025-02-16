@@ -46,6 +46,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.raw_data
+      args:
+        MY_ARG: "./data/train1.csv"
     ports:
       - "8888:8888"
     networks:
@@ -56,6 +58,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.raw_data
+      args:
+        MY_ARG: "./data/train2.csv"
     ports:
       - "8088:8088"
     networks:

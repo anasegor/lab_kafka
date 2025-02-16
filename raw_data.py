@@ -1,4 +1,5 @@
 from confluent_kafka import Producer
+import sys
 import random
 import time
 import json
@@ -8,9 +9,6 @@ bootstrap_servers1 = "kafka-0:9097"
 topic = "raw_data"
 conf = {"bootstrap.servers": bootstrap_servers1}
 data_producer1 = Producer(conf)
-
-
-data_train = pd.read_csv("./data/train.csv")
 
 
 def generate_stock_data():
@@ -28,4 +26,9 @@ def produce_stock_data():
 
 
 if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        data_train = pd.read_csv(sys.argv[1])
+    else:
+        data_train = pd.read_csv("./data/train1.csv")
+
     produce_stock_data()

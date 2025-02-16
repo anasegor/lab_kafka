@@ -1,7 +1,9 @@
 FROM python:3.9
+ARG PATH_TO_DATA
+ENV PATH_TO_DATA_ENV=${PATH_TO_DATA}
 WORKDIR /app
 COPY raw_data.py .
 COPY data ./data
 RUN python -m pip install --upgrade pip
 RUN pip install confluent_kafka pandas
-CMD ["python", "raw_data.py"]
+CMD python raw_data.py $PATH_TO_DATA_ENV
