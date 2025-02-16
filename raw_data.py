@@ -11,17 +11,12 @@ conf = {"bootstrap.servers": bootstrap_servers1}
 data_producer1 = Producer(conf)
 
 
-def generate_stock_data():
-    k = random.randint(0, data_train.shape[0] - 1)
-    return data_train.iloc[k].to_dict()
-
-
 def produce_stock_data():
-    while True:
-        stock_data = generate_stock_data()
+    for i in range(data_train.shape[0]):
+        stock_data = data_train.iloc[i].to_dict()
         data_producer1.produce(topic, key="1", value=json.dumps(stock_data))
         data_producer1.flush()
-        time.sleep(0.1)
+        time.sleep(0.2)
         print("send")
 
 
