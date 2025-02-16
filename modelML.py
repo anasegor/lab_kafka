@@ -4,7 +4,8 @@ from river import tree, linear_model, metrics
 
 model = linear_model.LinearRegression()
 # model = tree.HoeffdingTreeRegressor()
-metric = metrics.MSE()
+metric_mse = metrics.MSE()
+metric_logloss = metrics.LogLoss()
 
 bootstrap_servers2 = "kafka-1:9098"
 
@@ -27,10 +28,15 @@ def prediction():
             if y is not None:
                 model.learn_one(X, y)
                 y_pred = model.predict_one(X)
-                metric.update(y, y_pred)
+                metric_mse.update(y, y_pred)
+                metric_logloss.update(y, y_pred)
 
             predict_data_producer.produce(
-                "online-learning", key="1", value=json.dumps({"MSE": metric.get()})
+                "online-learning",
+                key="1",
+                value=json.dumps(
+                    {"MSE": metric_mse.get(), "LogLoss": metric_logloss.get()}
+                ),
             )
             predict_data_producer.flush()
 
